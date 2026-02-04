@@ -1,9 +1,10 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { Row } from "./dates";
 import { UJIERES, getColor } from "../data/ujieres";
 
-(pdfMake as any).vfs = pdfFonts.vfs;
+(pdfMake as any).vfs = (pdfFonts as any).vfs;
 
 const BORDER="#C9D1DC";
 const HEADER="#E9EDF3";
@@ -40,7 +41,7 @@ function legend(){
 }
 
 export function downloadRolPdf(year:number,monthName:string,rows:Row[]){
-    const body=[
+    const body: any[][] =[
         [
             {text:"FECHA",bold:true,alignment:"center",color:BLUE},
             {text:"RECIBIMIENTO (VIERNES)",bold:true,alignment:"center",color:BLUE},
@@ -58,22 +59,49 @@ export function downloadRolPdf(year:number,monthName:string,rows:Row[]){
         })
     ];
 
-    pdfMake.createPdf({
-        pageSize:"LETTER",
-        pageOrientation:"landscape", // ⭐ horizontal
-        pageMargins:[36,36,36,36],
-        content:[
-            {text:`PROGRAMA DE UJIER – ${monthName} ${year}`,alignment:"center",fontSize:18,bold:true,color:BLUE,margin:[0,0,0,12]},
+    const docDef: TDocumentDefinitions = {
+        pageSize: "LETTER",
+        pageOrientation: "landscape",
+        pageMargins: [36, 36, 36, 36],
+        content: [
             {
-                columns:[
-                    {width:"*",table:{headerRows:1,widths:[60,"*","*","*"],body},
-                    layout:{fillColor:(i:number)=>(i===0?HEADER:null),hLineColor:()=>BORDER,vLineColor:()=>BORDER}
-                    },
-                    {width:14,text:""},
-                    {width:200, ...legend()}
-                ]
-            }
+                text: `PROGRAMA DE UJIER – ${monthName} ${year}`,
+                alignment: "center",
+                fontSize: 18,
+                bold: true,
+                color: BLUE,
+                margin: [0, 0, 0, 14],
+            },
+            {
+                table: {
+                    widths: ["*"],
+                    body: [
+                        [
+                            {
+                                columns: [
+                                    {
+                                        width: "*",
+                                        table: { headerRows: 1, widths: [60, "*", "*", "*"], body },
+                                        layout: {
+                                            fillColor: (i: number) => (i === 0 ? HEADER : null),
+                                            hLineColor: () => BORDER,
+                                            vLineColor: () => BORDER,
+                                        },
+                                    },
+                                    { width: 18, text: "" },
+                                    { width: 200, ...(legend() as any) },
+                                ],
+                                columnGap: 12,
+                                alignment: "center",
+                            },
+                        ],
+                    ],
+                },
+                layout: "noBorders",
+            },
         ],
-        defaultStyle:{fontSize:11}
-    }).download(`PROGRAMA_DE_UJIER_${monthName}_${year}.pdf`);
+        defaultStyle: { fontSize: 11 },
+    };
+
+    pdfMake.createPdf(docDef).download(`PROGRAMA_DE_UJIER_${monthName}_${year}.pdf`);
 }
