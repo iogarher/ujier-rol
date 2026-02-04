@@ -67,7 +67,7 @@ export function downloadRolPdf(year:number,monthName:string,rows:Row[]){
             {
                 columns:[
                     {width:"*",table:{headerRows:1,widths:[60,"*","*","*"],body},
-                    layout:{fillColor:(i)=>i===0?HEADER:null,hLineColor:()=>BORDER,vLineColor:()=>BORDER}
+                    layout:{fillColor:(i:number)=>(i===0?HEADER:null),hLineColor:()=>BORDER,vLineColor:()=>BORDER}
                     },
                     {width:14,text:""},
                     {width:200, ...legend()}
