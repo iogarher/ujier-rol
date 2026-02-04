@@ -2,7 +2,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { Row } from "./dates";
-import { UJIERES, getColor } from "../data/ujieres";
+import { UJIERES, getColor, getTextColor } from "../data/ujieres";
 
 (pdfMake as any).vfs = (pdfFonts as any).vfs;
 
@@ -13,9 +13,14 @@ const MUTED="#6B7280";
 
 function dash(){ return {text:"—",alignment:"center",color:MUTED}; }
 
-function cell(name:string|""){
+function cell(name: string | "") {
     return name
-    ? {text:name,fillColor:getColor(name),margin:[5,5,5,5]}
+    ? {
+        text: name,
+        fillColor: getColor(name),
+        color: getTextColor(getColor(name)),
+        margin: [5, 5, 5, 5],
+    }
     : dash();
 }
 

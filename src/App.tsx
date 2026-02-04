@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import "./App.css";
-import { UJIERES, getColor } from "./data/ujieres";
+import { UJIERES, getColor, getTextColor } from "./data/ujieres";
 import { buildRows, type Row } from "./lib/dates";
 import { clearMonth, loadMonth, saveMonth } from "./lib/storage";
 import { downloadRolPdf } from "./lib/pdf";
@@ -126,7 +126,11 @@ export default function App() {
           className="sel"
           value={r.recibimiento}
           onChange={(e) => setRow(r.id, { recibimiento: e.target.value })}
-          style={{ backgroundColor: getColor(r.recibimiento) }}
+          style={{
+            backgroundColor: getColor(r.recibimiento),
+                  color: getTextColor(getColor(r.recibimiento)),
+                  fontWeight: 600,
+          }}
           >
           <option value="">— Seleccionar —</option>
           {UJIERES.map((u) => <option key={u.nombre} value={u.nombre}>{u.nombre}</option>)}
@@ -143,7 +147,11 @@ export default function App() {
           className="sel"
           value={r.matutino}
           onChange={(e) => setRow(r.id, { matutino: e.target.value })}
-          style={{ backgroundColor: getColor(r.matutino) }}
+          style={{
+            backgroundColor: getColor(r.matutino),
+                   color: getTextColor(getColor(r.matutino)),
+                   fontWeight: 600,
+          }}
           >
           <option value="">— Seleccionar —</option>
           {UJIERES.map((u) => <option key={u.nombre} value={u.nombre}>{u.nombre}</option>)}
@@ -160,7 +168,11 @@ export default function App() {
           className="sel"
           value={r.vespertino}
           onChange={(e) => setRow(r.id, { vespertino: e.target.value })}
-          style={{ backgroundColor: getColor(r.vespertino) }}
+          style={{
+            backgroundColor: getColor(r.vespertino),
+                   color: getTextColor(getColor(r.vespertino)),
+                   fontWeight: 600,
+          }}
           >
           <option value="">— Seleccionar —</option>
           {UJIERES.map((u) => <option key={u.nombre} value={u.nombre}>{u.nombre}</option>)}

@@ -19,3 +19,17 @@ export const UJIERES: Ujier[] = [
 
 export const getColor = (n: string | "") =>
 UJIERES.find(u => u.nombre === n)?.color ?? "#FFFFFF";
+
+export function getTextColor(bgColor: string) {
+    // Quita el # si existe
+    const c = bgColor.replace("#", "");
+    const r = parseInt(c.substr(0, 2), 16);
+    const g = parseInt(c.substr(2, 2), 16);
+    const b = parseInt(c.substr(4, 2), 16);
+
+    // fórmula luminancia
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    return brightness > 160 ? "#1A1A1A" : "#FFFFFF";
+}
+
