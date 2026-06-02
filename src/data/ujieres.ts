@@ -10,7 +10,6 @@ export const UJIERES: Ujier[] = [
     { nombre: "Ob. David", color: "#00A933" },
     { nombre: "Ob. Donaldo", color: "#FFBF00" },
     { nombre: "Diác. Franklin", color: "#813709" },
-    { nombre: "Ob. Iovanni", color: "#BBE33D" },
     { nombre: "Ob. Israel", color: "#3465A4" },
     { nombre: "Ob. Luis", color: "#81ACA6" },
     { nombre: "Ob. Matilde", color: "#B47804" },
